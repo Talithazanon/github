@@ -1,0 +1,29 @@
+name: interact with Github API
+on: 
+  pull_request:
+
+jobs:
+  create-issue:
+  runs-on: ubuntu-latest
+  job1:
+    permissions:
+      issues: write
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set Short SHA
+      id: set-sha
+      run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+     
+    - name: Create GitHub Issue
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          SHORT_SHA=${{ env.SHORT_SHA }}
+          ISSUE_TITLE="Issue created from SHA: $SHORT_SHA"
+          ISSUE_BODY="This issue was created automatically. Short SHA: $SHORT_SHA"
+          curl -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{\"title\":\"$ISSUE_TITLE\",\"body\":\"$ISSUE_BODY\"}" \
+            https://api.github.com/repos/${{ github.repository }}/issues
