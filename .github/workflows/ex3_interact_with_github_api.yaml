@@ -3,6 +3,14 @@ on:
   pull_request:
 
 jobs:
+  job1:
+    permissions:
+      actions: read[write]none
+      checks: read[write]none
+
+      issues: read[write]none
+
+  Job2:    
   create-issue:
     runs-on: ubuntu-latest
     steps:
