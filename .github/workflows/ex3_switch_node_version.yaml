@@ -5,13 +5,15 @@ on:
 jobs:
   run-npm-test:
     runs-on: ubuntu-latest
+    env:
+      nodeversion: 14
     steps:
         - name: checkout
           uses: actions/checkout@v3
         - name : setup node
           uses: actions/setup-node@v3
           with:
-            node-version:  nvm use <v14.21.3-linux-x64>
+            node-version: ${{env.NODEVERSIOM}}
         - name: run test
           shell: bash
           run: |
