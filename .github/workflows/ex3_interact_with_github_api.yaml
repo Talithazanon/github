@@ -3,28 +3,20 @@ on:
   pull_request:
 
 jobs:
-  job1:
-    permissions:
-      actions: read[write]none
-      checks: read[write]none
-
-      issues: read[write]none
-
-  Job2:    
   create-issue:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set Short SHA
-        id: set-sha
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
-      
-      - name: Create GitHub Issue
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+  runs-on: ubuntu-latest
+  issues: write
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set Short SHA
+      id: set-sha
+      run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+     
+    - name: Create GitHub Issue
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
           SHORT_SHA=${{ env.SHORT_SHA }}
           ISSUE_TITLE="Issue created from SHA: $SHORT_SHA"
           ISSUE_BODY="This issue was created automatically. Short SHA: $SHORT_SHA"
