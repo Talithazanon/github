@@ -1,9 +1,7 @@
 name: interact with Github API
 on: 
-  push:
-    branches:
-      - main
-      
+  pull_request:
+
 jobs:
   create-issue:
     runs-on: ubuntu-latest
@@ -27,4 +25,3 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -d "{\"title\":\"$ISSUE_TITLE\",\"body\":\"$ISSUE_BODY\"}" \
             https://api.github.com/repos/${{ github.repository }}/issues
-      --header 'authorization: Bearer <my-token>
