@@ -11,3 +11,12 @@ jobs:
     - name: Setup Node.js environment
       uses: actions/setup-node@v4.0.3
     - run: npm test
+  job2:
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v4.1.7
+        - name: Setup Node.js environment
+      uses: actions/setup-node@v4.0.3
+      needs: job1   
+    - run: npm test
+    
